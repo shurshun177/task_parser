@@ -4,7 +4,7 @@ import requests
 
 from s3_service import upload_file
 
-url = '127.0.0.1/v2/customers'
+url = 'http://127.0.0.1:5000/v2/customers'
 response = requests.get(url)
 input_json = response.json()
 output_json = {}
@@ -28,7 +28,7 @@ for customers in customers_data:
                 output_json[l] = links[l]['href']
 
 
-with gzip.GzipFile('output_file', 'w') as fout:
+with gzip.GzipFile('output_file.gz', 'w') as fout:
     fout.write(json.dumps(output_json).encode('utf-8'))
 
-upload_file(file_name='output_file', bucket='elementor-test-exercise')
+upload_file(file_name='output_file.gz', bucket='elementor-test-exercise')
